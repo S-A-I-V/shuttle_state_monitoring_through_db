@@ -16,7 +16,7 @@ offline_servers: Dict[str, bool] = {}
 
 # Database connection parameters
 db_config = {
-    'host': '10.10.96.237',
+    'host': '192.168.27.185',
     'user': 'saideep',
     'password': 'Lenskart@123#',
     'database': 'shuttle_state',

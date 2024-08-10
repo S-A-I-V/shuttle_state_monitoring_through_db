@@ -17,7 +17,7 @@ offline_servers: Dict[str, bool] = {}
 
 # MySQL connection configuration
 db_config = {
-    'host': '10.10.96.131',
+    'host': '192.168.27.185',
     'user': 'saideep',
     'password': 'Lenskart@123#',
     'database': 'shuttle_state',

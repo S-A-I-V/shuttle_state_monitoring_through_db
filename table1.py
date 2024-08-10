@@ -3,7 +3,7 @@ import pymysql
 # Function to connect to MySQL and create the database and table
 def setup_database():
     connection = pymysql.connect(
-        host='10.10.96.131',  # Replace with your MySQL server IP
+        host='192.168.27.185',  # Replace with your MySQL server IP
         user='saideep',  # Replace with your MySQL username
         password='Lenskart@123#',  # Replace with your MySQL password
         port=3306  # Default MySQL port

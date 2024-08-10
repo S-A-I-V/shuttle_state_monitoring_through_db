@@ -10,6 +10,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
+
 db_config = {
     'host': '192.168.27.185',
     'user': 'saideep',
@@ -17,6 +18,29 @@ db_config = {
     'database': 'shuttle_state',
     'port': 3306
 }
+
+def create_shuttle_status_table():
+    try:
+        connection = pymysql.connect(**db_config)
+        cursor = connection.cursor()
+        create_table_query = """
+        CREATE TABLE IF NOT EXISTS shuttle_status (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            shuttle_name VARCHAR(255) NOT NULL,
+            shuttle_ip VARCHAR(255) NOT NULL,
+            shuttle_state VARCHAR(10) NOT NULL,
+            state_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB;
+        """
+        cursor.execute(create_table_query)
+        connection.commit()
+    except pymysql.MySQLError as e:
+        logging.error(f"Error creating table: {e}")
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
 def populate_initial_data(file_path):
     shuttles = []
     try:
@@ -53,5 +77,6 @@ def insert_initial_shuttles(shuttles):
 
 
 if __name__ == "__main__":
+    create_shuttle_status_table()  # Create the table if it doesn't exist
     shuttles = populate_initial_data('temp_shuttles.txt')
     insert_initial_shuttles(shuttles)
