@@ -1,0 +1,35 @@
+import pymysql
+# Function to connect to MySQL and create the database and table
+def setup_database():
+    connection = pymysql.connect(
+        host='192.168.27.143',  # Replace with your MySQL server IP
+        user='saideep',  # Replace with your MySQL username
+        password='Lenskart@123',  # Replace with your MySQL password
+        port=3306  # Default MySQL port
+    )
+
+    try:
+        with connection.cursor() as cursor:
+            # Create database if it does not exist
+            cursor.execute("CREATE DATABASE IF NOT EXISTS PackingDispatchDB")
+            
+            # Switch to the new database
+            cursor.execute("USE PackingDispatchDB")
+            
+            # Create table if it does not exist
+            cursor.execute("""
+                CREATE TABLE entries (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    skuId VARCHAR(255) NOT NULL,
+                    dateOfScan DATE NOT NULL,
+                    timestamp DATETIME NOT NULL,
+                    stationId VARCHAR(255) NOT NULL,
+                    nexsId VARCHAR(10) NOT NULL
+                )
+            """)
+        connection.commit()
+    finally:
+        connection.close()
+
+# Execute the function to set up the database and table
+setup_database()
